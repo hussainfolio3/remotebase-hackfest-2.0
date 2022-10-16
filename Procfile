@@ -1,1 +1,1 @@
-web: streamlit run Authenticate_User.py
+web: sh setup.sh && streamlit run Authenticate_User.py
