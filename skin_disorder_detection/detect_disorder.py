@@ -4,6 +4,8 @@ import cv2
 import os
 from rembg import remove
 import streamlit as st
+from db import INSERT_DATA, insert_data
+from datetime import datetime
 
 # Parse Arguments
 # json_data = json.loads(sys.argv[1])
@@ -16,12 +18,15 @@ img = (
 # *** Segmentation Steps ***#
 
 # 1. Open Image
-def process_image(img):
-    THRESH_VAL = None  # json_data['thresh_val'] if 'thresh_val' in json_data else None
+def process_image(img,bodypart,date):
+    THRESH_VAL = None # json_data['thresh_val'] if 'thresh_val' in json_data else None
+    max=255
     OUT_DIR = "img_results"  # json_data['out_dir'] if 'out_dir' in json_data else 'result'
 
     BG_RM = True
-    image = img[0]
+    #image = img[0]
+    
+    image= img
     # print(image.shape)
     if BG_RM:
         image = remove(image)
@@ -34,8 +39,8 @@ def process_image(img):
 
     # 3. Image: Color: Split Channel
     # 4. Use Blue channel
-    #blue_channel, _, _ = cv2.split(image)
-    blue_channel = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
+    blue_channel, _, _ = cv2.split(image)
+    #blue_channel = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
     # 5. Image: Adjust: Threshold
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -49,14 +54,14 @@ def process_image(img):
     # get threshold ImageJ default algorithm
 
     if not THRESH_VAL:
-        THRESH_VAL, _, _ = get_threshold(bg_removed)
+        min, _, _ = get_threshold(bg_removed)
 
     #getting thresh from frontend slider 
-    # THRESH_VAL = get_thresh(THRESH_VAL)
+    min,max = get_thresh(min)
     # print(THRESH_VAL)
 
     # 6. Apply Threshold
-    ret, thresh_img = cv2.threshold(bg_removed, THRESH_VAL, 255, cv2.THRESH_BINARY)
+    ret, thresh_img = cv2.threshold(bg_removed, min, max, cv2.THRESH_BINARY)
 
     # 7. Analyze: Analyze particle: Overlay (check Display results and summary)
     contours, hierarchy = cv2.findContours(
@@ -83,29 +88,72 @@ def process_image(img):
     # Show Image
     thresh_img = cv2.cvtColor(thresh_img, cv2.COLOR_GRAY2BGR)
     out_path = os.path.join(
-        OUT_DIR, f"{IMAGE_ID}_{THRESH_VAL}_{depigmentation_percentage:.2f}.jpg"
+        OUT_DIR, f"{st.session_state['logged_in_user']}_{bodypart}_{datetime.strftime(date,'%m-%d-%Y')}.jpg"
     )
-    print("SSSSSSSSSSSSSSSSsss")
     
-    cv2.imwrite('img_results/result.jpg', image)
+    #out_dir= f"{usernam}"username date vofypath
+    #cv2.imwrite('img_results/result.jpg', image)
   
     # Create response
     res = {
-        "preprocessed_image": out_path,
-        "depigmentation_percentage": f"{depigmentation_percentage:.2f}%",
+        #"preprocessed_image": out_path,
+        "skin disorder ratio": f"{depigmentation_percentage:.2f}%",
         # "partical_analysis": depigmentation_cnts
     }
 
-    print("img_results/result",res)
+    # print("img_results/result",res)
+   
+
+    show_result(res)
+    show_image(cv2.cvtColor(img,cv2.COLOR_BGRA2RGB),cv2.cvtColor(image, cv2.COLOR_BGRA2RGB))
+    cv2.imwrite(out_path,cv2.cvtColor(image, cv2.COLOR_BGRA2RGB))
+    # insert_data(INSERT_DATA.format(username = st.session_state["logged_in_user"],
+    #             body_part = bodypart,
+    #             date = datetime.strftime(date,'%m-%d-%Y'),
+    #             disorder_percentage= depigmentation_percentage)
+    #              )
+
     return res,image,out_path
-
-# show_result(res)
-# show_image(cv2.cvtColor(input_image,cv2.COLOR_BGRA2RGB),cv2.cvtColor(image, cv2.COLOR_BGRA2RGB))
-# predict_cancer(input_image)
-
-
 
 def show_result(result):
 
     for k,v in result.items():
       st.write(f"{k} : {v}")
+
+
+def get_thresh(thresh_default=25):
+    min, max = st.slider('Please enter threshhold value ', 0, 255, (thresh_default, 255))
+    st.write("Selected min threshold value is", min ,"Selected max threshold value is", max )
+
+    return min,max
+
+def show_result(result):
+
+    for k,v in result.items():
+      st.write(f"{k} : {v}")
+
+def show_image(input_image,result):
+
+        st.header("Processed Image")
+        st.image(result)
+
+    
+        # st.header("Input Image")
+        # st.image(input_image)
+
+def show_radio():
+    choice = st.radio(
+    "Background removal",
+    ('Yes', 'No'))
+
+    if choice == 'Yes':
+        return True
+    else:
+        return True
+   
+# def save (username = st.session_state["logged_in_user"] , bodypart , date,depigmentation_percentage):
+#      insert_data(INSERT_DATA.format(username = st.session_state["logged_in_user"],
+#                 body_part = bodypart,
+#                 date = datetime.strftime(date,'%m-%d-%Y'),
+#                 disorder_percentage= depigmentation_percentage)
+#                  )
