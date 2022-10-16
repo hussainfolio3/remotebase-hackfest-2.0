@@ -31,25 +31,11 @@
 
 ## 🧐 Problem Statement <a name = "problem_statement"></a>
 
-It is useful to design and follow a specific format when writing a problem statement. While there are several options
-for doing this, the following is a simple and straightforward template often used in Business Analysis to maintain
-focus on defining the problem.
-
-- IDEAL: This section is used to describe the desired or “to be” state of the process or product. At large, this section
-  should illustrate what the expected environment would look like once the solution is implemented.
-- REALITY: This section is used to describe the current or “as is” state of the process or product.
-- CONSEQUENCES: This section is used to describe the impacts on the business if the problem is not fixed or improved upon.
-  This includes costs associated with loss of money, time, productivity, competitive advantage, and so forth.
-
-Following this format will result in a workable document that can be used to understand the problem and elicit
-requirements that will lead to a winning solution.
+The treatment of skin infections is a slow process, and it takes a long time for patients to see noticeable improvements in their condition. As a result, patients often become demotivated to continue treatment as they are unable to gauge how effective the treatment is. Patients who lose motivation often stop taking their medications which exacerbates the problem even more, resulting in an even longer recovery process.
 
 ## 💡 Idea / Solution <a name = "idea"></a>
 
-This section is used to describe potential solutions.
-
-Once the ideal, reality, and consequences sections have been
-completed, and understood, it becomes easier to provide a solution for solving the problem.
+Our app uses image processing to measure the spread of an infection in specific body parts of a patient currently undergoing recovery. The user can regularly take pictures of the effected area on a weekly or monthly basis and get a measurement of how much the area has been effected by the infection. Over time, the measurement of the infected area will be shown to decrease as the patient continues taking their medications. Patients will be shown a graph illustrating how each of their body parts effected by the infection have had their measurements decreased over time. Patients can look to this data as proof that their treatment is effective and gain motivation to continue taking their medication.
 
 ## ⛓️ Dependencies / Limitations <a name = "limitations"></a>
 
@@ -62,8 +48,7 @@ completed, and understood, it becomes easier to provide a solution for solving t
 
 ## 🚀 Future Scope <a name = "future_scope"></a>
 
-Write about what you could not develop during the course of the Hackathon; and about what your project can achieve
-in the future.
+In the future we'd hope to gather a larger dataset to train more complex machine learning models and give patients more accurate measurements for their conditions. We'd also like to create a mobile app that people can buy so that they can take pictures using their phones and get their measurements done more easily.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
