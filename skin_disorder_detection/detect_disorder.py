@@ -106,7 +106,7 @@ def process_image(img,bodypart,date):
 
     show_result(res)
     show_image(cv2.cvtColor(img,cv2.COLOR_BGRA2RGB),cv2.cvtColor(image, cv2.COLOR_BGRA2RGB))
-    cv2.imwrite(out_path,cv2.cvtColor(image, cv2.COLOR_BGRA2RGB))
+    cv2.imwrite(out_path,cv2.cvtColor(cv2.cvtColor(image, cv2.COLOR_BGRA2RGB), cv2.COLOR_BGRA2RGB))
     # insert_data(INSERT_DATA.format(username = st.session_state["logged_in_user"],
     #             body_part = bodypart,
     #             date = datetime.strftime(date,'%m-%d-%Y'),
