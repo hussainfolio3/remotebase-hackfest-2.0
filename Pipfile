@@ -7,6 +7,8 @@ name = "pypi"
 opencv-python = "*"
 rembg = "*"
 streamlit = "*"
+pysqlite3 = "*"
+matplotlib = "*"
 
 [dev-packages]
 

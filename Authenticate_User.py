@@ -1,6 +1,13 @@
 import streamlit as st
+st.set_page_config(page_title="Home Page", page_icon="🏠")
 
-st.set_page_config(page_title="Authentication", page_icon="👋")
+
+from db import init_db,populate_db
+
+init_db()
+populate_db()
+
+# st.set_page_config(page_title="Authentication", page_icon="👋")
 
 def check_password():
     """Returns `True` if the user had a correct password."""
@@ -39,5 +46,4 @@ def check_password():
         return True
 
 if  check_password():
-    st.write(f"Here goes your normal Streamlit app... {st.session_state['logged_in_user']}")
-    st.button("Click me")
+    st.header(f'Hi, {st.session_state["logged_in_user"]}!')
