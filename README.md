@@ -39,12 +39,7 @@ Our app uses image processing to measure the spread of an infection in specific 
 
 ## ⛓️ Dependencies / Limitations <a name = "limitations"></a>
 
-- Lack of Public Datasets for vitiligo and other diseases which results in depigmentation or hyperpigmentation of skin
-- Describe each limitation in detailed but concise terms
-- Explain why each limitation exists
-- Provide the reasons why each limitation could not be overcome using the method(s) chosen to acquire.
-- Assess the impact of each limitation in relation to the overall findings and conclusions of your project, and if
-  appropriate, describe how these limitations could point to the need for further research.
+- Lack of Public Datasets for vitiligo and other diseases which results in depigmentation or hyperpigmentation of skin due to which we were not able to train an ML model
 
 ## 🚀 Future Scope <a name = "future_scope"></a>
 
