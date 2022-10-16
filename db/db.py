@@ -30,3 +30,8 @@ conn = get_connection(URI_SQLITE_DB)
 
 def get_data(query, conn: Connection = get_connection(URI_SQLITE_DB)):
     return pd.read_sql(query, con=conn)
+
+def insert_data(query, conn: Connection = get_connection(URI_SQLITE_DB)):
+    conn.execute(query)
+    conn.commit()
+    return True
